@@ -47,5 +47,23 @@ public class TestSQLite {
 		Assert.assertFalse(datos.size()==0);
 		System.out.println("Se encontraron ciclos, cantidad:"+datos.size());
 	}
+	@Test
+	public void testGetIdCiclos() throws SQLException{
+		long id=bd.getIdModulo("Bases de datos.", 1);
+		System.out.println("Id curso:"+id);
+		Assert.assertNotEquals(0, id);
+	}
+	@Test
+	public void testGetIdUnSoloCiclos() throws SQLException{
+		long id=bd.getIdCiclo("Desarrollo de aplicaciones web");
+		Assert.assertNotEquals(0, id);
+		
+	}
+	@Test
+	public void testGetTextosModulos() throws SQLException{
+		ObservableList<String> datos = bd.getNombresModulos(1);
+		System.out.println(datos.toString());
+	}
+	
 
 }

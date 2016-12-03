@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -12,11 +14,14 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class GUI extends Application {
+public class GUI extends Application implements ChangeListener<String>{
 	Scene escena;
 	VBox layout=new VBox();
+	ListView<String> lvCiclos;
+	ListView<String> lvModulos;
 	long idCicloElegido=-1;
 	long idModuloElegido=-1;
+	long idCursoElegido=-1;
 	BaseDeDatosProgramaciones bd;
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
@@ -29,7 +34,8 @@ public class GUI extends Application {
 		
 	}
 	private void anadirControles() throws SQLException{
-		ListView<String> lv = this.getLVCiclos();
+		ListViewFixed<String> lv = this.getLVCiclos();
+		this.lvCiclos=lv;
 		layout.getChildren().add(lv);
 		
 		TabPane panelDatos=new TabPane();
@@ -45,22 +51,39 @@ public class GUI extends Application {
 		return lista;
 	}
 	
-	private ListView<String> crearListView(ObservableList<String> datos){
-		ListView<String> lv=new ListView<String>();
+	private ListViewFixed<String> crearListView(ObservableList<String> datos){
+		ListViewFixed<String> lv=new ListViewFixed<String>();
 		lv.setItems(datos);
+		lv.getSelectionModel().selectedItemProperty().addListener(this);
 		return lv;
 	}
 	public ListViewFixed<String> getLVCiclos() throws SQLException{
-		ListViewFixed<String> lvCiclos;
-		lvCiclos=new ListViewFixed<String>();
-		lvCiclos.setItems( bd.getNombresCiclos() );
-//		lvCiclos.setMaxWidth(Double.MAX_VALUE);
-//		lvCiclos.setPrefWidth(Double.MAX_VALUE);
-//		lvCiclos.setPrefHeight(Control.USE_COMPUTED_SIZE);
-		return lvCiclos;
+		ObservableList<String> listaCiclos;
+		listaCiclos=bd.getNombresCiclos();
+		ListViewFixed<String> lvf=this.crearListView(listaCiclos);
+		return lvf;
 	}
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+	public boolean seSeleccionoUnCiclo(ObservableValue<? extends String> observable){
+		if (observable==this.lvCiclos.getSelectionModel().selectedItemProperty()){
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public void changed
+		(ObservableValue<? extends String> observable, String antiguoValor, String nuevoValor) {
+		if (seSeleccionoUnCiclo(observable)){
+			try {
+				this.idCicloElegido=bd.getIdCiclo(nuevoValor);
+			} catch (SQLException e) {
+				
+			}
+		}
+		
+		
 	}
 }
