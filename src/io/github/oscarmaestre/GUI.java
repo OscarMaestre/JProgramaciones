@@ -1,19 +1,22 @@
 package io.github.oscarmaestre;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class GUI extends Application {
 	Scene escena;
 	VBox layout=new VBox();
-	
+	long idCicloElegido=-1;
+	long idModuloElegido=-1;
 	BaseDeDatosProgramaciones bd;
 	@Override
 	public void start(Stage primaryStage) throws SQLException {
@@ -29,7 +32,17 @@ public class GUI extends Application {
 		ListView<String> lv = this.getLVCiclos();
 		layout.getChildren().add(lv);
 		
+		TabPane panelDatos=new TabPane();
 		
+		
+		
+	}
+	
+	private ArrayList<DatosTabla> getDatosTablas(){
+		ArrayList<DatosTabla> lista;
+		lista=new ArrayList<DatosTabla>();
+		
+		return lista;
 	}
 	
 	private ListView<String> crearListView(ObservableList<String> datos){
