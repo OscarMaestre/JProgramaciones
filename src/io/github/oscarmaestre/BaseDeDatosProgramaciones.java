@@ -53,9 +53,15 @@ public class BaseDeDatosProgramaciones {
 		String sql="Select %s from %s where %s='%s'";
 		String consulta=String.format(sql, nombreCampoID, 
 				nombreTabla,nombreCampo,valorCampo);
+		//System.out.println("Consulta:"+consulta);
 		ResultSet rs=this.getSQL(consulta);
 		rs.next();
 		return rs.getLong(1);
+	}
+	public long getIdModulo(String nombreModulo) throws SQLException{
+		long id=-1;
+		id=this.getID(NOMBRE_TABLA_MODULOS, MODULOS_NOMBRE_ID, MODULOS_NOMBRE_MODULO, nombreModulo);
+		return id;
 	}
 	public long getIdCiclo(String nombreCiclo) throws SQLException{
 		long id=-1;
@@ -102,6 +108,23 @@ public class BaseDeDatosProgramaciones {
 		}
 		return datos;
 	}
+	public ObservableList<String> getTextosCondicion
+		(String nombreTabla, String nombreCampo,
+				String campoCondicion, long valorID) throws SQLException{
+		ObservableList<String> datos;
+		datos=FXCollections.observableArrayList();
+		
+		String sql="select %s from %s where %s=%d order by %s";
+		String consulta=String.format(sql, nombreCampo, nombreTabla, 
+				campoCondicion, valorID, nombreCampo);
+		System.out.println(consulta);
+		ResultSet rs=this.getSQL(consulta);
+		while (rs.next()){
+			datos.add(rs.getString(1));
+		}
+		return datos;
+	}
+	
 	public ObservableList<String> getNombresCiclos() throws SQLException{
 		ObservableList<String> datos;
 		datos=getTextos(NOMBRE_TABLA_CICLOS, CICLOS_NOMBRE_CICLO);
@@ -123,7 +146,7 @@ public class BaseDeDatosProgramaciones {
 				idCiclo,
 				BaseDeDatosProgramaciones.MODULOS_NOMBRE_MODULO
 				);
-		System.out.println("Textos:"+consulta);
+		//System.out.println("Textos:"+consulta);
 		ResultSet rs=this.getSQL(consulta);
 		while (rs.next()){
 			datos.add(rs.getString(1));

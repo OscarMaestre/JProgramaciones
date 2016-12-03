@@ -64,6 +64,12 @@ public class TestSQLite {
 		ObservableList<String> datos = bd.getNombresModulos(1);
 		System.out.println(datos.toString());
 	}
+	@Test
+	public void testIdModuloAislado() throws SQLException{
+		long idCiclo;
+		idCiclo=this.bd.getIdModulo("Bases de datos.");
+		
+	}
 	
 
 }
