@@ -28,6 +28,7 @@ public class GUI extends Application implements ChangeListener<String>{
 	long idCursoElegido=-1;
 	BaseDeDatosProgramaciones bd;
 	@Override
+	
 	public void start(Stage primaryStage) throws SQLException {
 		bd=new BaseDeDatosProgramaciones(":resource:resources/ciclos.db");
 		escena=new Scene(layout, 800,600);
@@ -83,6 +84,7 @@ public class GUI extends Application implements ChangeListener<String>{
 		}
 		return t;
 	}
+	
 	
 	
 	private ListViewFixed<String> crearListView(ObservableList<String> datos){

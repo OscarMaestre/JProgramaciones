@@ -31,8 +31,16 @@ public class DatosTabla {
 	public static ArrayList<DatosTabla> getTablasInteres(){
 		ArrayList<DatosTabla> datos=new ArrayList<DatosTabla>();
 		datos.add(new DatosTabla(
+				"cualificaciones_profesionales","texto",
+				"Cualificaciones profesionales del ciclo", 
+				BaseDeDatosProgramaciones.NOMBRE_TABLA_CICLOS));
+		datos.add(new DatosTabla(
 				"competenciasgenerales","texto",
-				"Competencias generales", 
+				"Competencias generales del ciclo", 
+				BaseDeDatosProgramaciones.NOMBRE_TABLA_CICLOS));
+		datos.add(new DatosTabla(
+				"objetivosgenerales","texto",
+				"Objetivos generales del ciclo", 
 				BaseDeDatosProgramaciones.NOMBRE_TABLA_CICLOS));
 		datos.add(new DatosTabla(
 				"resultados_de_aprendizaje","texto",

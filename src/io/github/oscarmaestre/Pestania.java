@@ -6,8 +6,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -48,8 +50,15 @@ public abstract class Pestania extends Tab implements ChangeListener<String> {
 	private void crearControles(){
 		this.setCampoIdBusqueda();
 		itemsVacios.add("Elija un módulo");
+		textos.getSelectionModel().selectionModeProperty().set(SelectionMode.MULTIPLE);
 		contenedor.getChildren().addAll(textos,textosCopiados,btnCopiar);
 		this.setContent(contenedor);
+		this.btnCopiar.setOnAction(
+				(ActionEvent e) ->{
+					GestorPortapapeles.copiar(textos, "\n");
+					System.out.println("Copiado!");
+				}
+		);
 	}
 	protected void limpiarTextos(){
 		this.textos.setItems(itemsVacios);
